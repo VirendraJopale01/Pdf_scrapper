@@ -1,5 +1,19 @@
 # PDF Data Extractor
 
+Directory structure:
+└── virendrajopale01-pdf_scrapper/
+    ├── README.md
+    ├── main.py
+    ├── requirements.txt
+    ├── Controller/
+    │   ├── data_scrap.py
+    │   ├── pdf_downloader.py
+    │   └── __pycache__/
+    ├── Utils/
+    │   ├── utlis.py
+    │   └── __pycache__/
+    └── downloads/
+
 ## Installation
 
 1. Clone the repository:
