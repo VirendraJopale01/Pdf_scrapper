@@ -64,5 +64,7 @@ def download_pdf(url, download_directory, filename):
     finally:
         driver.quit()  # Ensure the driver is quit in all cases
 
-    
+def threaded_download(url,directories,filename):
+    file=download_pdf(url,directories,filename)
+    print(f'Downloaded file: {file}')    
     
