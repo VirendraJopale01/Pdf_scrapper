@@ -1,5 +1,5 @@
 # PDF Data Extractor
-
+```
 Directory structure:
 └── virendrajopale01-pdf_scrapper/
     ├── README.md
@@ -13,7 +13,7 @@ Directory structure:
     │   ├── utlis.py
     │   └── __pycache__/
     └── downloads/
-
+```
 ## Installation
 
 1. Clone the repository:
