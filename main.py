@@ -109,59 +109,78 @@ def main():
     The selected PDF's pages are extracted and passed to the controller function.
     """
     try:
+        # Set up the folder path for the downloaded PDFs
+        folder_path = os.path.join(os.getcwd(), 'downloads')
+        os.makedirs(folder_path, exist_ok=True)
+        directories = folder_path
         
-        directories = "C:\\Users\\VirendraJopale\\Downloads\\Virendra_jopale_Assignment_2\\downloads"
- 
         while True:
+            # Print the options for the user to choose from
             print("\n1. Download New PDF")
             print("2. Extract From Existing PDF")
+            print("3. Exit")
             
-            choice = int(input("\nChoose (1,2): "))
- 
+            # Get the user's choice
+            choice = int(input("\nChoose an option (1/2): "))
+            
             if choice == 1:
+                # Ask for the URL and download the PDF
                 url = str(input("\nEnter URL for downloading the PDF: "))
+                
                 if url:
+                    # Extract the PDF name from the URL
                     filename = extract_Pdf_Name(url)
+                    
+                    # Check if the PDF already exists in the directory
                     is_exist_pdf = pdf_In_local(directories)
- 
+                    
                     if filename not in is_exist_pdf:
+                        # Download the PDF
                         file = download_pdf(url, directories, filename)
                         print("\nFor scrapping data select pdf", file)
+                        
+                        # Extract the pages from the PDF
                         reader = select_pdf(file)
- 
                         num_pages = int(input("\nEnter the number of pages to extract: "))
                         pages = pages_extract_multithreaded(reader, num_pages)
+                        
+                        # Pass the extracted pages to the controller
                         controller(pages)
                     else:
                         print("File Already Exists")
                 else:
                     print("Invalid URL")
- 
+            
             elif choice == 2:
+                # Get the list of PDFs in the directory
                 pdfs_list = pdf_In_local(directories)
- 
+                
                 if pdfs_list:
+                    # Print the list of PDFs and ask the user to select one
                     print("\nAvailable PDFs:")
                     for i, pdf in enumerate(pdfs_list):
                         print(f"{i + 1}. {pdf}")
- 
+                    
                     pdf_choice = int(input("\nSelect a PDF: "))
- 
+                    
                     if 1 <= pdf_choice <= len(pdfs_list):
+                        # Construct the full path to the selected PDF
                         selected_pdf = directories + '\\' + pdfs_list[pdf_choice - 1]
                         reader = select_pdf(selected_pdf)
                         num_pages = int(input("\nEnter the number of pages to extract: "))
                         pages = pages_extract_multithreaded(reader, num_pages)
+                        
+                        # Pass the extracted pages to the controller
                         controller(pages)
                     else:
                         print("Invalid Selection")
                 else:
                     print("No PDFs Found")
- 
+            
             else:
                 print("Invalid Choice. Exiting...")
                 break
- 
+    
     except Exception as e:
         print(f"An error occurred: {e}")
  
