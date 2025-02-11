@@ -33,7 +33,7 @@ def extract_Pdf_Name(url):
     # Return the name of the PDF with the '.pdf' extension
     return pdf_name[0]+'.pdf'
 
-def pages_extract(reader, num):
+def pages_extract(reader, start, end):
     """
     Extract text from a specified number of pages in a PDF.
 
@@ -49,17 +49,18 @@ def pages_extract(reader, num):
     """
     pages_list = []  # Initialize a list to store the text of each page
 
-    # Iterate over the range of pages to extract text
-    for i in range(num):
+    # # Iterate over the range of pages to extract text
+    for i in range(start,end):
         # Access the page object at index i
         answer = reader.pages[i]
         # Extract text from the page object
         pages = answer.extract_text()
-        # Remove leading and trailing whitespace from the extracted text
-        cleaned_pgs = pages.strip()
-        # Add the cleaned text to the pages list
-        pages_list.append(cleaned_pgs)
     
+        # Add the cleaned text to the pages list
+        pages_list.append(pages.strip())
+    
+        # Access the page object at index i
+   
     return pages_list  # Return the list of extracted page texts
 
 def fetch_cin(pages):

@@ -3,7 +3,7 @@ import threading
 from Controller.pdf_downloader import download_pdf
 from Controller.data_scrap import *
 from Utils.utlis import *
- 
+import math 
 def controller(pages):
     """
     This function acts as a controller for the user interface.
@@ -61,10 +61,10 @@ def extract_pages_threaded(reader, start, end, result, index):
    
     """
     # Extract the text from the pages
-    extracted_text = pages_extract(reader, end - start)
+    extracted_text = pages_extract(reader, start, end)
     # Store the result in the list
     result[index] = extracted_text
- 
+    print(result)
  
 def pages_extract_multithreaded(reader, num_pages, num_threads=4):
     """
@@ -78,7 +78,7 @@ def pages_extract_multithreaded(reader, num_pages, num_threads=4):
     Returns:
         list: A list of strings where each string is a page of the PDF.
     """
-    import math
+
     result = [None] * num_threads  # A list to store the results of each thread
     threads = []
     pages_per_thread = math.ceil(num_pages / num_threads)  # Calculate the number of pages per thread
@@ -87,7 +87,7 @@ def pages_extract_multithreaded(reader, num_pages, num_threads=4):
     for i in range(num_threads):
         start = i * pages_per_thread  # The starting page number for this thread
         end = min(start + pages_per_thread, num_pages)  # The ending page number for this thread
-        
+        print(start,end)
         thread = threading.Thread(target=extract_pages_threaded, args=(reader, start, end, result, i))
         threads.append(thread)
         thread.start()  # Start the thread
